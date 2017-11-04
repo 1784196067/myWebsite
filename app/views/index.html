@@ -1,0 +1,68 @@
+<!doctype html>
+<html ng-app="app">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MyBlog</title>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/app.css" />
+  </head>
+  <body>
+  <div class="container" ng-controller="blogController">
+   <header class="top">
+   		<h1 class="top_head"><img src="images/top.png"></h1>
+      <span class="top_right"><img src="images/top_right.png"></span>
+   </header>
+   <div class="main">
+   		<section class="blog">
+   			<artical class="article">
+          <header class="article_head">
+            <h2 class="h2">{{article.title}}</h2>
+          </header>
+          <section class="article_body">{{article.body}}</section>
+          <footer class="article_end">
+            <div class="article_end_time">{{article.timestamp | date: 'yyyy/MM/dd'}}</div>
+          </footer>
+        </artical>
+        <hr/>
+   			<section class="comments">
+          <h3>文章评论</h3>
+          <ul ng-repeat="reply in commentThread.replies">
+            <li class="comment">{{reply.subject}} <br/><span class="comment_date">——{{reply.timeStamp | date: 'yyyy/MM/dd'}}</span></li>
+          </ul>
+          <div class="form">
+            <form>
+              <textarea name="subject" cols="40" rows="5" ng-model="body"></textarea><br/>
+              <button ng-click="addReply(article._id, body)">提交</button>
+            </form>
+          </div>
+   			</section>
+   		</section>
+   		<aside class="right-aside">
+   			<section class="right-aside-1">
+          <h3>文章分类</h3>
+          <ul ng-repeat="tag in tagGroups">
+            <li><img src="/images/aside1.png"/><a href="">{{tag.type}}({{tag.count}})</a></li>
+          </ul>
+        </section>
+   			<section class="right-aside-2">
+          <h3>最新文章</h3>
+          <ul ng-repeat="art in lastArticle">
+            <li ng-click="setArticle(art._id)"><img src="/images/aside2.png"/><a href="">{{art.title}}</a></li>
+          </ul>
+        </section>
+   			<section class="right-aside-3">
+          <h3>最新评论</h3>
+          <ul ng-repeat="comm in lastComments">
+            <li><img src="/images/aside3.png"/><a href="">{{comm.body}}...</a></li>
+          </ul>
+        </section>
+   		</aside>
+   </div>
+ </div>
+  <!-- <script src="/static/js/blog_app.js"></script> -->
+  <script type="text/javascript" src="http://localhost:8000/views/bundle.js"></script>
+</body>
+</html>
